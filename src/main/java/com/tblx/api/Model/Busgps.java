@@ -1,5 +1,6 @@
 package com.tblx.api.Model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -8,6 +9,8 @@ import java.util.Date;
 public class Busgps
 {
     //@id?
+//    @Id
+//    private String id;
     private String timestamp;
     private String lineID;
     private String direction;
