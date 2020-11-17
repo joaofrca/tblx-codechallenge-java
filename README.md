@@ -1,6 +1,5 @@
-# TB.LX CODE CHALLENGE JAVA
+# TB.LX CODE CHALLENGE JAVA // TO BE EDITED!
 
-// TO BE EDITED!
 This repository provides all dependencies to run a web service that exposes a RESTful API written in Node with Express and MongoDB.
 
 ## Installing NPM
