@@ -7,10 +7,21 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-//@RepositoryRestResource(collectionResourceRel = "people", path = "people")
+//TODO: to be deleted: @RepositoryRestResource(collectionResourceRel = "people", path = "people")
 @Repository
 public interface BusgpsRepository extends MongoRepository<Busgps, Long> {
 
-	List<Busgps> findByDelay(@Param("delay") String delay);
+	List<Busgps> findByOperator(@Param("operator") String operator);
+
+	List<Busgps> findByTimestampBetween(@Param("timestamp") long starttime,
+										@Param("timestamp") long endtime);
+
+	List<Busgps> findByTimestampBetweenAndOperator(@Param("timestamp") long starttime,
+												   @Param("timestamp") long endtime,
+												   @Param("operator") String operator);
+
+	List<Busgps> findByTimestampBetweenAndVehicleID(@Param("timestamp") long starttime,
+												   @Param("timestamp") long endtime,
+												   @Param("vehicleID") int vehicleID);
 
 }
