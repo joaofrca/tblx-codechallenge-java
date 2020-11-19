@@ -1,17 +1,22 @@
 package com.tblx.api.Controller;
 
-import com.mongodb.BasicDBObject;
 import com.tblx.api.Model.Busgps;
 import com.tblx.api.Repositories.BusgpsRepository;
 import com.tblx.api.Services.BusgpsService;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
+@Validated
 public class BusgpsController {
 
 	@Autowired
@@ -34,32 +39,75 @@ public class BusgpsController {
 	}
 
 	@GetMapping(value= "/task1/{startTime}/{endTime}")
-	public List<Busgps> getRunningOperators(@PathVariable(value="startTime") String startTime,
-											@PathVariable(value="endTime") String endTime){
+	public Set<String> getRunningOperators(@PathVariable(value="startTime") @NonNull String startTime,
+											@PathVariable(value="endTime") @NonNull String endTime){
+		//validar os nao nulls
+		try {
+			Set<String> operators = busgpsService.getRunningOperators(startTime, endTime);
 
-		return busgpsService.getRunningOperators(startTime, endTime);
+			return operators;
+		} catch (Exception e) {
+			System.out.println("Exception occurred");
+		}
+		return null;//mudar
 	}
 
 	@GetMapping(value= "/task2/{startTime}/{endTime}/{operator}")
-	public List<Busgps> getVehiclesIDList(@PathVariable(value="startTime") String startTime,
-										  @PathVariable(value="endTime") String endTime,
-										  @PathVariable(value="operator") String operator){
+	public Set<Integer> getVehiclesIDList(@PathVariable(value="startTime") @NonNull String startTime,
+										  @PathVariable(value="endTime") @NonNull String endTime,
+										  @PathVariable(value="operator") @NonNull String operator){
 
 		return busgpsService.getVehiclesIDList(startTime, endTime, operator);
 	}
 
 	@GetMapping(value= "/task3/{startTime}/{endTime}/{operator}")
-	public List<Busgps> getVehiclesAtStop(@PathVariable(value="startTime") String startTime,
-										  @PathVariable(value="endTime") String endTime,
-										  @PathVariable(value="operator") String operator){
+	public Set<Integer> getVehiclesAtStop(@PathVariable(value="startTime") @NonNull String startTime,
+										  @PathVariable(value="endTime") @NonNull String endTime,
+										  @PathVariable(value="operator") @NonNull String operator){
 		return busgpsService.getVehiclesAtStop(startTime, endTime, operator);
 	}
 
 	@GetMapping(value= "/task4/{startTime}/{endTime}/{vehicleID}")
-	public List<Busgps> getVehicleTrace(@PathVariable(value="startTime") String startTime,
-										@PathVariable(value="endTime") String endTime,
-										@PathVariable(value="vehicleID") int vehicleID){
+	public Set<String> getVehicleTrace(@PathVariable(value="startTime") @NonNull String startTime,
+										   @PathVariable(value="endTime") @NonNull String endTime,
+										   @PathVariable(value="vehicleID") @NonNull int vehicleID){
 		return busgpsService.getVehicleTrace(startTime, endTime, vehicleID);
+	}
+
+	public String createResponse(String serviceResponse){
+		return "{ result:" +  serviceResponse + ", statusCode: OK }";
+	}
+
+	//TODO TO BE DELETED!!!//TODO TO BE DELETED!!!//TODO TO BE DELETED!!!//TODO TO BE DELETED!!!//TODO TO BE DELETED!!!
+
+	@GetMapping(value= "/task11/{startTime}/{endTime}")
+	public List<Busgps> getRunningOperators2(@PathVariable(value="startTime") @NonNull String startTime,
+									  @PathVariable(value="endTime") @NonNull String endTime){
+
+		return busgpsRepository.findByTimestampBetween(Long.parseLong(startTime), Long.parseLong(endTime));
+
+	}
+
+	@GetMapping(value= "/task22/{startTime}/{endTime}/{operator}")
+	public List<Busgps> getVehiclesIDList2(@PathVariable(value="startTime") @NonNull String startTime,
+									@PathVariable(value="endTime") @NonNull String endTime,
+									@PathVariable(value="operator") @NonNull String operator){
+
+		return busgpsRepository.findByTimestampBetweenAndOperator(Long.parseLong(startTime), Long.parseLong(endTime), operator);
+	}
+
+	@GetMapping(value= "/task33/{startTime}/{endTime}/{operator}")
+	public List<Busgps> getVehiclesAtStop2(@PathVariable(value="startTime") @NonNull String startTime,
+									@PathVariable(value="endTime") @NonNull String endTime,
+									@PathVariable(value="operator") @NonNull String operator){
+		return busgpsRepository.findByTimestampBetweenAndOperator(Long.parseLong(startTime), Long.parseLong(endTime), operator);
+	}
+
+	@GetMapping(value= "/task44/{startTime}/{endTime}/{vehicleID}")
+	public List<Busgps> getVehicleTrace2(@PathVariable(value="startTime") @NonNull String startTime,
+										@PathVariable(value="endTime") @NonNull String endTime,
+										@PathVariable(value="vehicleID") @NonNull int vehicleID){
+		return busgpsRepository.findByTimestampBetweenAndVehicleID(Long.parseLong(startTime), Long.parseLong(endTime), vehicleID);
 	}
 
 }

@@ -106,7 +106,7 @@ public class Busgps
         this.operator = operator;
     }
 
-    public String isCongestion() {
+    public String getCongestion() {
         return congestion;
     }
 
@@ -162,7 +162,7 @@ public class Busgps
         this.stopID = stopID;
     }
 
-    public String isAtStop() {
+    public String getAtStop() {
         return atStop;
     }
 

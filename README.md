@@ -331,4 +331,14 @@ Download one extract, and from that extract, use 1 example CSV as input
 - GitHub CI jobs still not working. 
 - => Repeat all the challenge in Java with Spring MVC.
 
+
+- cuidadinho com o handling das excepções no repositório
+- Limpar todos
+- limpar // comentários
+- error handling
+- unit test
+- validators
+- retornar valores como deve ser
+
+
 # Made in Lisbon with ♡
