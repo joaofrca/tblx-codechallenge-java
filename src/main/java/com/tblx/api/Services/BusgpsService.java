@@ -64,13 +64,13 @@ public class BusgpsService {
 	}
 
 	//ainda errado. talvez pensar em opção secudária, tipo retornar uma string mais normal
-	public Set<String> getVehicleTrace(String startTime, String endTime, int vehicleID){
+	public JSONArray getVehicleTrace(String startTime, String endTime, int vehicleID){
 		//validate params
 		List<Busgps> busgpsList = busgpsRepository.findByTimestampBetweenAndVehicleID(Long.parseLong(startTime), Long.parseLong(endTime), vehicleID);
 		if (busgpsList.isEmpty()) {return null;} //throw new BusgpsNotFoundException(12);
 
-//		JSONArray jarr = new JSONArray();
-		return busgpsList
+		JSONArray jarr = new JSONArray();
+		busgpsList
 				.stream()
 				.sorted(Comparator.comparing(Busgps::getTimeframe))
 				.map(busgps -> {
@@ -79,6 +79,7 @@ public class BusgpsService {
 						jo.put("timestamp", busgps.getTimeframe());
 						jo.put("lon", busgps.getLon());
 						jo.put("lat", busgps.getLat());
+						jarr.put(jo);
 					}
 					catch (JSONException e) {
 						//falta aqui
@@ -88,7 +89,7 @@ public class BusgpsService {
 
 				})
 				.collect(Collectors.toSet());
-//		return jarr;
+		return jarr;
 	}
 
 }

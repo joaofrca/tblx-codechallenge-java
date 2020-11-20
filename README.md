@@ -339,6 +339,7 @@ Download one extract, and from that extract, use 1 example CSV as input
 - unit test
 - validators
 - retornar valores como deve ser
+- ver se se tem de retornar respostas http
 
 
 # Made in Lisbon with ♡

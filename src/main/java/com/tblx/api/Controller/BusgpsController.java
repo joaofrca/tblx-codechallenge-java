@@ -6,6 +6,8 @@ import com.tblx.api.Services.BusgpsService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,45 +35,79 @@ public class BusgpsController {
 
 	//TODO: TO BE DELETED
 	@GetMapping(value= "/task5/{operator}")
-	public List<Busgps> getMerdasTeste(@PathVariable(value="operator") String operator){
+	public List<Busgps> getTeste(@PathVariable(value="operator") String operator){
 
 		return busgpsRepository.findByOperator(operator);
 	}
 
+	//TODO: TO BE DELETED
+	@GetMapping(value= "/teste/{xx}")
+	public ResponseEntity getTeste2(@PathVariable(value="xx") String xx){
+		JSONObject jo = new JSONObject();
+			jo.put("timestamp", "timestamp2");
+			jo.put("lon", "lon2");
+			jo.put("lat", "lat2");
+		return new ResponseEntity(jo, HttpStatus.OK);
+	}
+
 	@GetMapping(value= "/task1/{startTime}/{endTime}")
-	public Set<String> getRunningOperators(@PathVariable(value="startTime") @NonNull String startTime,
+	public ResponseEntity getRunningOperators(@PathVariable(value="startTime") @NonNull String startTime,
 											@PathVariable(value="endTime") @NonNull String endTime){
+
 		//validar os nao nulls
 		try {
 			Set<String> operators = busgpsService.getRunningOperators(startTime, endTime);
-
-			return operators;
-		} catch (Exception e) {
-			System.out.println("Exception occurred");
+			return new ResponseEntity(operators, HttpStatus.OK);
 		}
-		return null;//mudar
+		catch (Exception e)
+		{
+			return new ResponseEntity(e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@GetMapping(value= "/task2/{startTime}/{endTime}/{operator}")
-	public Set<Integer> getVehiclesIDList(@PathVariable(value="startTime") @NonNull String startTime,
+	public ResponseEntity getVehiclesIDList(@PathVariable(value="startTime") @NonNull String startTime,
 										  @PathVariable(value="endTime") @NonNull String endTime,
 										  @PathVariable(value="operator") @NonNull String operator){
 
-		return busgpsService.getVehiclesIDList(startTime, endTime, operator);
+		try {
+			Set<Integer> vehiclesIDList = busgpsService.getVehiclesIDList(startTime, endTime, operator);
+			return new ResponseEntity(vehiclesIDList, HttpStatus.OK);
+		}
+		catch (Exception e)
+		{
+			return new ResponseEntity(e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@GetMapping(value= "/task3/{startTime}/{endTime}/{operator}")
-	public Set<Integer> getVehiclesAtStop(@PathVariable(value="startTime") @NonNull String startTime,
+	public ResponseEntity getVehiclesAtStop(@PathVariable(value="startTime") @NonNull String startTime,
 										  @PathVariable(value="endTime") @NonNull String endTime,
 										  @PathVariable(value="operator") @NonNull String operator){
-		return busgpsService.getVehiclesAtStop(startTime, endTime, operator);
+
+		try {
+			Set<Integer> vehiclesAtStop = busgpsService.getVehiclesAtStop(startTime, endTime, operator);
+			return new ResponseEntity(vehiclesAtStop, HttpStatus.OK);
+		}
+		catch (Exception e)
+		{
+			return new ResponseEntity(e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@GetMapping(value= "/task4/{startTime}/{endTime}/{vehicleID}")
-	public Set<String> getVehicleTrace(@PathVariable(value="startTime") @NonNull String startTime,
+	public ResponseEntity getVehicleTrace(@PathVariable(value="startTime") @NonNull String startTime,
 										   @PathVariable(value="endTime") @NonNull String endTime,
 										   @PathVariable(value="vehicleID") @NonNull int vehicleID){
-		return busgpsService.getVehicleTrace(startTime, endTime, vehicleID);
+
+		try {
+			JSONArray vehicleTrace = busgpsService.getVehicleTrace(startTime, endTime, vehicleID);
+			return new ResponseEntity(vehicleTrace.toList(), HttpStatus.OK);
+		}
+		catch (Exception e)
+		{
+			return new ResponseEntity(e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	public String createResponse(String serviceResponse){
