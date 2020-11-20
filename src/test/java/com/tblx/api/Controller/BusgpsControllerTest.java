@@ -18,6 +18,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+//JSONArray to list error?
+//adicionar unhappy flows?
 
 @RunWith(MockitoJUnitRunner.class)
 
@@ -46,14 +48,13 @@ public class BusgpsControllerTest {
 	@Test
 	public void getVehiclesIDListTest()
 	{
-		//diminuir
-		Set<Integer> vehiclesID = Stream.of(33223, 40012, 40014, 33167, 33552, 40017, 40021, 40025, 43034, 40027, 33500, 33501, 40029, 33184, 40032, 43042, 43043, 43046, 33510, 33513, 33452, 33453, 33455, 38070, 38071).collect(Collectors.toSet());
+		Set<Integer> vehiclesID = Stream.of(33223, 40012, 40014, 33167).collect(Collectors.toSet());
 
 		Mockito
 				.when(busgpsService.getVehiclesIDList("1354233629999999", "1354233651000000", "HN"))
 				.thenReturn(vehiclesID);
 
-		ResponseEntity responseEntity = busgpsController.getRunningOperators("1354233629999999", "1354233651000000");
+		ResponseEntity responseEntity = busgpsController.getVehiclesIDList("1354233629999999", "1354233651000000", "HN");
 		Assert.assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
 		Assert.assertEquals(vehiclesID,responseEntity.getBody());
 	}
@@ -61,8 +62,7 @@ public class BusgpsControllerTest {
 	@Test
 	public void getVehiclesAtStopTest()
 	{
-		//diminuir
-		Set<Integer> vehiclesAtStop = Stream.of(40021, 33223, 33513, 40027, 33501, 33453, 40029).collect(Collectors.toSet());
+		Set<Integer> vehiclesAtStop = Stream.of(40021, 33223, 33513).collect(Collectors.toSet());
 
 		Mockito
 				.when(busgpsService.getVehiclesAtStop("1354233629999999", "1354233651000000", "HN"))
@@ -95,7 +95,5 @@ public class BusgpsControllerTest {
 		Assert.assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
 		Assert.assertEquals(vehicleTrace,responseEntity.getBody());
 	}
-
-
 
 }
