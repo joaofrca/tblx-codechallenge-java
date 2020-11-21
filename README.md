@@ -340,6 +340,8 @@ Download one extract, and from that extract, use 1 example CSV as input
 - validators
 - retornar valores como deve ser
 - ver se se tem de retornar respostas http
+- indentar tudo como deve ser - importar alguma tool ou plugin
+- conversao das datas
 
 
 # Made in Lisbon with ♡
