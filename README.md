@@ -328,25 +328,21 @@ Download one extract, and from that extract, use 1 example CSV as input
 - Add Facade layer.
 - GitHub CI jobs still not working. 
 
-- unit test - good flow
-(commit)
-- error handling - na conversão, nos serviços, no controller,
-    fazer erro custom? quando dá internal, como fazer?
-    - cuidadinho com o handling das excepções no repositório
-    
+- unit test - good flow - falta um no serviço!!
+
+- unit test no controller bem
+- Separate requests/Controllers by type. - refactor 
+
 - Limpar todos
 - limpar // comentários
 - ver todas os ficheiros
-
-- Separate requests/Controllers by type. - refactor 
-
 - indentar tudo como deve ser - importar alguma tool ou plugin - google format nao esta a funcionar
-- unit test - fazer bad flow?
+- unit test - fazer bad flow? - fazer pelo menos um teste de erro a gerar uma exception!
+    -unit test ao met do serviço
 - documentation
--readme
+- readme
 
--generalizer merdas nos unit tests com before
-- fazer pelo menos um teste de erro a gerar uma exception!
+- generalizer merdas nos unit tests com before?
 
 
 # Made in Lisbon with ♡

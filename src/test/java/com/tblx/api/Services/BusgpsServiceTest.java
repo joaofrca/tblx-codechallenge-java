@@ -92,6 +92,7 @@ public class BusgpsServiceTest {
 		Assert.assertEquals(vehiclesAtStopArrayExpected,vehiclesAtStopArrayResult);
 	}
 
+	//Teste nao esta a dar por algum motivo.....
 	@Test
 	public void getVehicleTraceTest() throws BusgpsNotFoundException, BusgpsDateConversionException {
 
@@ -106,7 +107,7 @@ public class BusgpsServiceTest {
 				.thenReturn(busgpsMockArray2);
 
 		List<VehicleTrace> vehicleTraceArrayResult = this.busgpsService.getVehicleTrace("2012-11-30T00:00:29", "2012-11-30T00:00:51", 40021	);
-		Assert.assertSame(vehicleTraceArrayExpected.toArray(),vehicleTraceArrayResult);
+		Assert.assertEquals(vehicleTraceArrayExpected,vehicleTraceArrayResult);
 	}
 
 }

@@ -29,33 +29,6 @@ public class BusgpsControllerTest {
 
 	@InjectMocks
 	BusgpsController busgpsController;
-	//	MockMvc mockMvc;
-//
-//	@Before
-//	public void init()
-//	{
-//		mockMvc = standaloneSetup(busgpsController).build();
-//	}
-//
-//	//novo teste nao funciona tao bem
-//	@Test
-//	public void getRunningOperatorsTest() throws Exception {
-//		Set<String> operatorsArray = Stream.of("CD","RD","CF","HN","SL","D1","D2","PO").collect(Collectors.toSet());
-//
-//		Mockito
-//				.when(busgpsService.getRunningOperators("1354233629999999", "1354233651000000"))
-//				.thenReturn(operatorsArray);
-//
-//		mockMvc.perform(
-//				MockMvcRequestBuilders.get("/task1/1354233629999999/1354233651000000/")
-//		)
-//				.andExpect(status().isOk())
-//				.andExpect(content().string(operatorsArray.toString()));
-//
-////		ResponseEntity responseEntity = busgpsController.getRunningOperators("1354233629999999", "1354233651000000");
-////		Assert.assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
-////		Assert.assertEquals(operatorsArray,responseEntity.getBody());
-//	}
 
 	@Test
 	public void getRunningOperatorsTest() throws Exception {
