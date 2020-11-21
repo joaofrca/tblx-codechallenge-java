@@ -27,33 +27,9 @@ public class BusgpsController {
 	@Autowired
 	public BusgpsService busgpsService;
 
-	//TODO: TO BE DELETED
-	@GetMapping(value= "/all")
-	public List<Busgps> getAllBusgps(){
-		return busgpsRepository.findAll();
-	}
-
-	//TODO: TO BE DELETED
-	@GetMapping(value= "/task5/{operator}")
-	public List<Busgps> getTeste(@PathVariable(value="operator") String operator){
-
-		return busgpsRepository.findByOperator(operator);
-	}
-
-	//TODO: TO BE DELETED
-	@GetMapping(value= "/teste/{xx}")
-	public ResponseEntity getTeste2(@PathVariable(value="xx") String xx){
-		JSONObject jo = new JSONObject();
-			jo.put("timestamp", "timestamp2");
-			jo.put("lon", "lon2");
-			jo.put("lat", "lat2");
-		return new ResponseEntity(jo, HttpStatus.OK);
-	}
-
 	@GetMapping(value= "/task1/{startTime}/{endTime}")
 	public ResponseEntity getRunningOperators(@PathVariable(value="startTime") @NonNull String startTime,
 											@PathVariable(value="endTime") @NonNull String endTime){
-
 		//validar os nao nulls
 		try {
 			Set<String> operators = busgpsService.getRunningOperators(startTime, endTime);
@@ -110,11 +86,30 @@ public class BusgpsController {
 		}
 	}
 
-	public String createResponse(String serviceResponse){
-		return "{ result:" +  serviceResponse + ", statusCode: OK }";
+	//TODO TO BE DELETED!!!//TODO TO BE DELETED!!!//TODO TO BE DELETED!!!//TODO TO BE DELETED!!!//TODO TO BE DELETED!!!
+
+	//TODO: TO BE DELETED
+	@GetMapping(value= "/all")
+	public List<Busgps> getAllBusgps(){
+		return busgpsRepository.findAll();
 	}
 
-	//TODO TO BE DELETED!!!//TODO TO BE DELETED!!!//TODO TO BE DELETED!!!//TODO TO BE DELETED!!!//TODO TO BE DELETED!!!
+	//TODO: TO BE DELETED
+	@GetMapping(value= "/task5/{operator}")
+	public List<Busgps> getTeste(@PathVariable(value="operator") String operator){
+
+		return busgpsRepository.findByOperator(operator);
+	}
+
+	//TODO: TO BE DELETED
+	@GetMapping(value= "/teste/{xx}")
+	public ResponseEntity getTeste2(@PathVariable(value="xx") String xx){
+		JSONObject jo = new JSONObject();
+			jo.put("timestamp", "timestamp2");
+			jo.put("lon", "lon2");
+			jo.put("lat", "lat2");
+		return new ResponseEntity(jo, HttpStatus.OK);
+	}
 
 	@GetMapping(value= "/task11/{startTime}/{endTime}")
 	public List<Busgps> getRunningOperators2(@PathVariable(value="startTime") @NonNull String startTime,
