@@ -320,7 +320,6 @@ Download one extract, and from that extract, use 1 example CSV as input
 # TODOs
 
 - Improve validations.
-- Separate requests/Controllers by type.
 - Improve tests:
   - More unhappy flows on tests.
 - Improve error handling.
@@ -329,17 +328,25 @@ Download one extract, and from that extract, use 1 example CSV as input
 - Add Facade layer.
 - GitHub CI jobs still not working. 
 
-
-- cuidadinho com o handling das excepções no repositório
+- unit test - good flow
+(commit)
+- error handling - na conversão, nos serviços, no controller,
+    fazer erro custom? quando dá internal, como fazer?
+    - cuidadinho com o handling das excepções no repositório
+    
 - Limpar todos
 - limpar // comentários
-- error handling
-- unit test
-- validators
-- retornar valores como deve ser
-- ver se se tem de retornar respostas http
-- indentar tudo como deve ser - importar alguma tool ou plugin
-- conversao das datas
+- ver todas os ficheiros
+
+- Separate requests/Controllers by type. - refactor 
+
+- indentar tudo como deve ser - importar alguma tool ou plugin - google format nao esta a funcionar
+- unit test - fazer bad flow?
+- documentation
+-readme
+
+-generalizer merdas nos unit tests com before
+- fazer pelo menos um teste de erro a gerar uma exception!
 
 
 # Made in Lisbon with ♡

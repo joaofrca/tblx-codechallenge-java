@@ -1,8 +1,13 @@
 package com.tblx.api.Error;
 
-public class BusgpsNotFoundException extends RuntimeException{
+import org.springframework.http.HttpStatus;
 
-	BusgpsNotFoundException(Long id) {
-		super("Could not find Busgps " + id);
+public class BusgpsNotFoundException extends BusgpsException{
+
+	private static final HttpStatus STATUSCODE = HttpStatus.NOT_FOUND;
+	private static final String ERRORMESSAGE = "Busgps Not Found.";
+
+	public BusgpsNotFoundException() {
+		super(ERRORMESSAGE, STATUSCODE);
 	}
 }

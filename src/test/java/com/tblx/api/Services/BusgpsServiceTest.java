@@ -1,9 +1,10 @@
 package com.tblx.api.Services;
 
+import com.tblx.api.Error.BusgpsDateConversionException;
+import com.tblx.api.Error.BusgpsNotFoundException;
 import com.tblx.api.Model.Busgps;
+import com.tblx.api.Model.VehicleTrace;
 import com.tblx.api.Repositories.BusgpsRepository;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,69 +48,65 @@ public class BusgpsServiceTest {
 	}
 
 	@Test
-	public void getRunningOperatorsTest() {
+	public void getRunningOperatorsTest() throws Exception {
 
 		Set<String> operatorsExpected = Stream.of("HN","D1").collect(Collectors.toSet());
+		long microStartTime = this.busgpsService.getMicroTimestamp("2012-11-30T00:00:29");
+		long microEndTime = this.busgpsService.getMicroTimestamp("2012-11-30T00:00:51");
 
 		Mockito
-				.when(busgpsRepository.findByTimestampBetween(Long.parseLong("1354233629999999"), Long.parseLong("1354233651000000")))
+				.when(busgpsRepository.findByTimestampBetween(microStartTime, microEndTime))
 				.thenReturn(busgpsMockArray1);
 
-		Set<String> operatorsResult = this.busgpsService.getRunningOperators("1354233629999999", "1354233651000000");
+		Set<String> operatorsResult = this.busgpsService.getRunningOperators("2012-11-30T00:00:29", "2012-11-30T00:00:51");
 		Assert.assertEquals(operatorsExpected, operatorsResult);
 	}
 
 	@Test
-	public void getVehiclesIDListTest() {
+	public void getVehiclesIDListTest() throws BusgpsNotFoundException, BusgpsDateConversionException {
 
 		Set<Integer> vehiclesIDArrayExpected = Stream.of(43012,40025,40021).collect(Collectors.toSet());
+		long microStartTime = this.busgpsService.getMicroTimestamp("2012-11-30T00:00:29");
+		long microEndTime = this.busgpsService.getMicroTimestamp("2012-11-30T00:00:51");
 
 		Mockito
-				.when(busgpsRepository.findByTimestampBetweenAndOperator(Long.parseLong("1354233629999999"), Long.parseLong("1354233651000000"), "HN"))
+				.when(busgpsRepository.findByTimestampBetweenAndOperator(microStartTime, microEndTime, "HN"))
 				.thenReturn(busgpsMockArray1);
 
-		Set<Integer> vehiclesIDArrayResult = this.busgpsService.getVehiclesIDList("1354233629999999", "1354233651000000", "HN");
+		Set<Integer> vehiclesIDArrayResult = this.busgpsService.getVehiclesIDList("2012-11-30T00:00:29", "2012-11-30T00:00:51", "HN");
 		Assert.assertEquals(vehiclesIDArrayExpected,vehiclesIDArrayResult);
 	}
 
 	@Test
-	public void getVehiclesAtStopTest() {
+	public void getVehiclesAtStopTest() throws BusgpsNotFoundException, BusgpsDateConversionException {
 
 		Set<Integer> vehiclesAtStopArrayExpected = Stream.of(40025, 40021).collect(Collectors.toSet());
+		long microStartTime = this.busgpsService.getMicroTimestamp("2012-11-30T00:00:29");
+		long microEndTime = this.busgpsService.getMicroTimestamp("2012-11-30T00:00:51");
 
 		Mockito
-				.when(busgpsRepository.findByTimestampBetweenAndOperator(Long.parseLong("1354233629999999"), Long.parseLong("1354233651000000"), "HN"))
+				.when(busgpsRepository.findByTimestampBetweenAndOperator(microStartTime, microEndTime, "HN"))
 				.thenReturn(busgpsMockArray1);
 
-		Set<Integer> vehiclesAtStopArrayResult = this.busgpsService.getVehiclesAtStop("1354233629999999", "1354233651000000", "HN");
+		Set<Integer> vehiclesAtStopArrayResult = this.busgpsService.getVehiclesAtStop("2012-11-30T00:00:29", "2012-11-30T00:00:51", "HN");
 		Assert.assertEquals(vehiclesAtStopArrayExpected,vehiclesAtStopArrayResult);
 	}
 
 	@Test
-	public void getVehicleTraceTest() throws JSONException {
+	public void getVehicleTraceTest() throws BusgpsNotFoundException, BusgpsDateConversionException {
 
-		final String jsonString =
-				"["+
-				"{"+
-				"\"lon\":\"-6.305417\","+
-				"\"lat\":\"53.396168\","+
-				"\"timestamp\":\"2012-11-29\""+
-				"},"+
-				"{"+
-				"\"lon\":\"-6.306583\","+
-				"\"lat\":\"53.398151\","+
-				"\"timestamp\":\"2012-11-29\""+
-				"}"+
-				"]";
-		JSONArray vehicleTraceArrayExpected = new JSONArray(jsonString);
+		List<VehicleTrace> vehicleTraceArrayExpected = Stream.of(new VehicleTrace("2012-11-29", "-6.305417", "53.396168"),
+				new VehicleTrace("2012-11-29", "-6.306583", "53.398151"))
+				.collect(Collectors.toList());
+		long microStartTime = this.busgpsService.getMicroTimestamp("2012-11-30T00:00:29");
+		long microEndTime = this.busgpsService.getMicroTimestamp("2012-11-30T00:00:51");
 
 		Mockito
-				.when(busgpsRepository.findByTimestampBetweenAndVehicleID(Long.parseLong("1354233629999999"), Long.parseLong("1354233651000000"), 40021))
+				.when(busgpsRepository.findByTimestampBetweenAndVehicleID(microStartTime, microEndTime, 40021))
 				.thenReturn(busgpsMockArray2);
 
-		//verificar que pode ser assim com toString();
-		JSONArray vehicleTraceArrayResult = this.busgpsService.getVehicleTrace("1354233629999999", "1354233651000000", 40021	);
-		Assert.assertEquals(vehicleTraceArrayExpected.toString(),vehicleTraceArrayResult.toString());
+		List<VehicleTrace> vehicleTraceArrayResult = this.busgpsService.getVehicleTrace("2012-11-30T00:00:29", "2012-11-30T00:00:51", 40021	);
+		Assert.assertSame(vehicleTraceArrayExpected.toArray(),vehicleTraceArrayResult);
 	}
 
 }

@@ -1,23 +1,19 @@
 package com.tblx.api.Model;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Date;
 
 @Document(collection = "busgps")
 public class Busgps
 {
-    //@id?
 //    @Id
 //    private String id;
     private String timestamp;
     private String lineID;
     private String direction;
     private String journeyPatternID;
-    private String timeframe;//devia ser date..
+    private String timeframe;
     private String vehicleJourneyID;
-    private String operator; // minlength: 2, maxlength: 2
+    private String operator;
     private String congestion;
     private String lon;
     private String lat;
@@ -27,12 +23,11 @@ public class Busgps
     private String stopID;
     private String atStop;
 
-//    public Busgps() {
-//        super();
-//    }
 
-    public Busgps(String timestamp, String lineID, String direction, String journeyPatternID, String timeframe, String vehicleJourneyID, String operator, String congestion, String lon, String lat, String delay, String blockID, String vehicleID, String stopID, String atStop) {
-//        super();
+
+    public Busgps(String timestamp, String lineID, String direction, String journeyPatternID, String timeframe,
+                  String vehicleJourneyID, String operator, String congestion, String lon, String lat, String delay,
+                  String blockID, String vehicleID, String stopID, String atStop) {
         this.timestamp = timestamp;
         this.lineID = lineID;
         this.direction = direction;

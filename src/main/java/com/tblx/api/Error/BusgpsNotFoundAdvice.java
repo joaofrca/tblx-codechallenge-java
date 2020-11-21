@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+//VER O QUE FAZER COM ISTO
 public class BusgpsNotFoundAdvice {
 
 	@ResponseBody
