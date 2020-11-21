@@ -30,6 +30,33 @@ public class BusgpsControllerTest {
 
 	@InjectMocks
 	BusgpsController busgpsController;
+	//	MockMvc mockMvc;
+//
+//	@Before
+//	public void init()
+//	{
+//		mockMvc = standaloneSetup(busgpsController).build();
+//	}
+//
+//	//novo teste nao funciona tao bem
+//	@Test
+//	public void getRunningOperatorsTest() throws Exception {
+//		Set<String> operatorsArray = Stream.of("CD","RD","CF","HN","SL","D1","D2","PO").collect(Collectors.toSet());
+//
+//		Mockito
+//				.when(busgpsService.getRunningOperators("1354233629999999", "1354233651000000"))
+//				.thenReturn(operatorsArray);
+//
+//		mockMvc.perform(
+//				MockMvcRequestBuilders.get("/task1/1354233629999999/1354233651000000/")
+//		)
+//				.andExpect(status().isOk())
+//				.andExpect(content().string(operatorsArray.toString()));
+//
+////		ResponseEntity responseEntity = busgpsController.getRunningOperators("1354233629999999", "1354233651000000");
+////		Assert.assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
+////		Assert.assertEquals(operatorsArray,responseEntity.getBody());
+//	}
 
 	@Test
 	public void getRunningOperatorsTest()
@@ -73,20 +100,23 @@ public class BusgpsControllerTest {
 		Assert.assertEquals(vehiclesAtStop,responseEntity.getBody());
 	}
 
+	//TODO: STILL NOT WORKING DUE TO TOLIST()
 	@Test
-	public void getVehicleTraceTest()
-	{
-		JSONArray vehicleTrace = new JSONArray();
-		try {
-			JSONObject trace = new JSONObject();
-			trace.put("lon", "-6.305417");
-			trace.put("lat", "53.396168");
-			trace.put("timestamp", "2012-11-29");
-			vehicleTrace.put(trace);
-		} catch (JSONException e) {
-			//falta aqui
-		}
-
+	public void getVehicleTraceTest() throws JSONException {
+		final String jsonString =
+				"["+
+						"{"+
+						"\"lon\":\"-6.305417\","+
+						"\"lat\":\"53.396168\","+
+						"\"timestamp\":\"2012-11-29\""+
+						"},"+
+						"{"+
+						"\"lon\":\"-6.306583\","+
+						"\"lat\":\"53.398151\","+
+						"\"timestamp\":\"2012-11-29\""+
+						"}"+
+						"]";
+		JSONArray vehicleTrace = new JSONArray(jsonString);
 		Mockito
 				.when(busgpsService.getVehicleTrace("1354233629999999", "1354233651000000", 40021))
 				.thenReturn(vehicleTrace);
