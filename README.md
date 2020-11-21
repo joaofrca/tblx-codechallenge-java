@@ -322,14 +322,12 @@ Download one extract, and from that extract, use 1 example CSV as input
 - Improve validations.
 - Separate requests/Controllers by type.
 - Improve tests:
-  - Test DB should not be used and should be mocked.
   - More unhappy flows on tests.
 - Improve error handling.
 - Improve Swagger documentation.
 - Substitute starttime and endtime parameters by query string.
 - Add Facade layer.
 - GitHub CI jobs still not working. 
-- => Repeat all the challenge in Java with Spring MVC.
 
 
 - cuidadinho com o handling das excepções no repositório
