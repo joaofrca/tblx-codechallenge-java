@@ -18,7 +18,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-//JSONArray to list error?
 //adicionar unhappy flows?
 
 @RunWith(MockitoJUnitRunner.class)

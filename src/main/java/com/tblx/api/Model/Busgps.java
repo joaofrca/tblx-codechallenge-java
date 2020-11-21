@@ -5,8 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "busgps")
 public class Busgps
 {
-//    @Id
-//    private String id;
+
     private String timestamp;
     private String lineID;
     private String direction;
@@ -23,11 +22,10 @@ public class Busgps
     private String stopID;
     private String atStop;
 
-
-
     public Busgps(String timestamp, String lineID, String direction, String journeyPatternID, String timeframe,
                   String vehicleJourneyID, String operator, String congestion, String lon, String lat, String delay,
                   String blockID, String vehicleID, String stopID, String atStop) {
+
         this.timestamp = timestamp;
         this.lineID = lineID;
         this.direction = direction;
@@ -43,6 +41,7 @@ public class Busgps
         this.vehicleID = vehicleID;
         this.stopID = stopID;
         this.atStop = atStop;
+
     }
 
     public String getTimestamp() {

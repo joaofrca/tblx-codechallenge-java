@@ -8,9 +8,11 @@ public class VehicleTrace
     private String lat;
 
     public VehicleTrace(String timestamp, String lon, String lat) {
+
         this.timestamp = timestamp;
         this.lon = lon;
         this.lat = lat;
+
     }
 
     public String getTimestamp() {
