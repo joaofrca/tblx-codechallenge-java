@@ -1,0 +1,142 @@
+swagger: "2.0"
+info:
+  description: The goal of this challenge is to build a web service that exposes Vehicle (Bus), Fleet (Operator), and Activity (Stop) data, for a given time frame.
+  version: 0.0.1
+  title: "TBLX - code challenge - JAVA"
+host: localhost:4000
+
+tags:
+  - name: Task 1
+    description: Given a time frame [start-time, end-time], what is the list of running operators?
+  - name: Task 2
+    description: Given a time frame [start-time, end-time] and an Operator, what is the list of vehicle IDs?
+  - name: Task 3
+    description: Given a time frame [start-time, end-time] and a fleet, which vehicles are at a stop?
+  - name: Task 4
+    description: Given a time frame [start-time, end-time] and a vehicle, return the trace of that vehicle (GPS entries, ordered by timestamp).
+schemes:
+  - http
+  - https
+paths:
+  /operators/:starttime/:endtime:
+    get:
+      tags:
+        - Task 1
+      summary: Get list of Running Operators
+      description: Get list of Running Operators
+      operationId: getRunningOperators
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Running Operators array
+          schema:
+            $ref: "#/definitions/RunningOperatorsList"
+        "500":
+          description: Exception Object
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /vehicles/:starttime/:endtime/:operator:
+    get:
+      tags:
+        - Task 2
+      summary: Get list of VehicleIDs
+      description: Get list of VehicleIDs
+      operationId: getVehiclesIDList
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Running Operators array
+          schema:
+            $ref: "#/definitions/VehicleIDList"
+        "500":
+          description: Exception Object
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /vehiclesAtStop/:starttime/:endtime/:operator:
+    get:
+      tags:
+        - Task 3
+      summary: Get list of VehicleIDs At Stop
+      description: Get list of VehicleIDs At Stop
+      operationId: getVehiclesAtStop
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Running Operators array
+          schema:
+            $ref: "#/definitions/VehiclesAtStopList"
+        "500":
+          description: Exception Object
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /vehicleTrace/:starttime/:endtime/:vehicleID:
+    get:
+      tags:
+        - Task 4
+      summary: Get list of Running Operators
+      description: Get list of Running Operators
+      operationId: getVehicleTrace
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Running Operators array
+          schema:
+            $ref: "#/definitions/VehicleTraceList"
+        "500":
+          description: Exception Object
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+definitions:
+  RunningOperatorsList:
+    type: array
+    items:
+      type: string
+      example: CD, PO, HN, D2, RD, CF, SL
+  VehicleIDList:
+    type: array
+    items:
+      type: string
+      example: 33452, 33453, 33223, 33552, 43042
+  VehiclesAtStopList:
+    type: array
+    items:
+      type: string
+      example: 33453, 33223
+  VehicleTraceList:
+    type: array
+    items:
+      type: object
+      $ref: "#/definitions/VehicleTrace"
+  VehicleTrace:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: "2012-11-30"
+      lon:
+        type: string
+        example: "-6.2786"
+      lat:
+        type: string
+        example: "53.417"
+  ErrorResponse:
+    type: object
+    properties:
+      todo:
+        type: string
+        example: "TODO"
+externalDocs:
+  description: github.com/joaofrca/tblx-codechallenge-java
+  url: "https://github.com/joaofrca/tblx-codechallenge-java"
