@@ -7,6 +7,7 @@ import com.tblx.api.Repositories.BusgpsRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -61,7 +62,7 @@ public class VehiclesServiceTest {
 	}
 
 	@Test
-	@Tag("getVehiclesIDListTest")
+	@DisplayName("getVehiclesIDListTest")
 	public void getVehiclesIDListTest() throws BusgpsNotFoundException, BusgpsDateConversionException {
 
 		Set<Integer> vehiclesIDArrayExpected = Stream.of(43012,40025,40021).collect(Collectors.toSet());
@@ -71,6 +72,7 @@ public class VehiclesServiceTest {
 	}
 
 	@Test
+	@DisplayName("getVehiclesAtStopTest")
 	public void getVehiclesAtStopTest() throws BusgpsNotFoundException, BusgpsDateConversionException {
 
 		Set<Integer> vehiclesAtStopArrayExpected = Stream.of(40025, 40021).collect(Collectors.toSet());

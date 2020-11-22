@@ -1,18 +1,21 @@
 package com.tblx.api.Services;
 
 import com.tblx.api.Error.BusgpsDateConversionException;
+import com.tblx.api.Error.BusgpsException;
 import com.tblx.api.Error.BusgpsNotFoundException;
 import com.tblx.api.Model.Busgps;
 import com.tblx.api.Repositories.BusgpsRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Set;
@@ -61,13 +64,24 @@ public class OperatorsServiceTest {
 	}
 
 	@Test
-	@Tag("getRunningOperatorsTest")
+	@DisplayName("getRunningOperatorsTest")
 	public void getRunningOperatorsTest() throws BusgpsDateConversionException, BusgpsNotFoundException {
 
 		Set<String> operatorsExpected = Stream.of("HN","D1").collect(Collectors.toSet());
 
 		Set<String> operatorsResult = this.operatorsService.getRunningOperators("2012-11-30T00:00:29", "2012-11-30T00:00:51");
 		Assert.assertEquals(operatorsExpected, operatorsResult);
+	}
+
+	@Test
+	@DisplayName("getRunningOperatorsTest - exception")
+	public void getRunningOperatorsExceptionTest() {
+		try {
+			this.operatorsService.getRunningOperators("2012-11-30T00:00:51", "2012-11-30T00:00:29");
+		} catch (BusgpsException e) {
+			Assert.assertEquals("Busgps Not Found." ,e.getErrorMessage());
+			Assert.assertEquals(HttpStatus.NOT_FOUND ,e.getStatusCode());
+		}
 	}
 
 }
