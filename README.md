@@ -1,10 +1,6 @@
-# TB.LX CODE CHALLENGE JAVA // TO BE EDITED!
+# TB.LX CODE CHALLENGE - JAVA
 
-This repository provides all dependencies to run a web service that exposes a RESTful API written in Node with Express and MongoDB.
-
-## Installing NPM
-
-Get NPM from [here](https://www.npmjs.com/get-npm).
+This repository provides all dependencies to run a web service that exposes a RESTful API written in Java with MongoDB.
 
 ## Installing MongoDB
 
@@ -23,33 +19,24 @@ Postman is a collaboration platform for API development, and can be downloaded f
 On the folder's directory run:
 
 ```
-git clone https://github.com/joaofrca/tblx-codechallenge.git
+git clone https://github.com/joaofrca/tblx-codechallenge-java.git
 ```
 
-#### 1. Install the project dependencies
+#### 1. Data Load
 
-On the folder's directory run:
-
-```
-./mvnw spring-boot:run
-```
-
-#### 2. Data Load
-
-Three environments exist within this project: DEV, TEST, PRD(TODO).
-In order to use the DEV environments and run the test files, one shall manually import the data into the MongoDB.
+In order to use the mongoDB in this project, one shall manually import the data into the MongoDB.
 
 On the folder's directory, navigate to ./dataset folder. From the zip file which can be found [here](https://codechallengestracc.blob.core.windows.net/code-challenge/dublin-dataset.zip), download the 'siri.20130130.csv' file and add into the folder, making it two csv files:
 
 - siri.20130130.csv
 - siri.20130130-small-test.csv
 
-These files contain the dataset used for DEV and TEST environments. A first line shall be added into 'siri.20130130.csv', containing the following header of the model/schema:
+These files contain the dataset used. A first line shall be added into 'siri.20130130.csv', containing the following header of the model/schema:
 
 ```
 timestamp,lineID,direction,journeyPatternID,timeframe,vehicleJourneyID,operator,congestion,lon,lat,delay,blockID,vehicleID,stopID,atStop
 ```
-The file 'siri.20130130-small-test.csv' already contains the above header.
+The file 'siri.20130130-small-test.csv' already contains the above header, as an example.
 
 To load the data, one shall manually run, in the ./dataset path:
 
@@ -57,7 +44,7 @@ To load the data, one shall manually run, in the ./dataset path:
 mongoimport -d <db_name> -c <collection_name> --type csv --file <file_name> --headerline
 ```
 
-Where, for DEV environment:
+The variables to populate shall be:
 
 ```
 db_name = busDEV
@@ -65,25 +52,23 @@ collection_name = busgps
 file_name = siri.20130130.csv
 ```
 
-And for TEST environment:
+Making the whole command:
 
 ```
-db_name = busTEST
-collection_name = busgps
-file_name = siri.20130130-small-test.csv
+mongoimport -d busDEV -c busgps --type csv --file siri.20130130.csv --headerline
 ```
 
-If a different dataset is to be used, one shall modify the script accordingly and add the headerline to the csv file which will be loaded. The busTEST DB is expecting this file_name though, and changing it will make the tests fail.
+Note: any file from the zip file can be used. If a different dataset is to be used, one shall modify the script accordingly and add the headerline to the csv file which will be loaded.
 
 #### 2. Run the project
 
 On the folder's directory run:
 
 ```
-npm start
+./mvnw spring-boot:run
 ```
 
-The server will run on localhost:4000.
+The server will run on localhost:6039.
 
 #### 3. Play around with the app using Postman
 
@@ -91,155 +76,93 @@ Use Postman to try the application. Four routes are available:
 
 1.  Given a time frame [start-time, end-time], what is the list of running operators?
 
-- get : [localhost:4000/task1/:starttime/:endtime](localhost:4000/task1/:starttime/:endtime)
+- get : [localhost:6039/operators/:starttime/:endtime](http://localhost:6039/operators/:starttime/:endtime)
   Requires keys:
-  - starttime (ISO 8601)
-  - endtime (ISO 8601)
+   * startTime in ISO-8601 format.
+   * endTime in ISO-8601 format.
 
 2. Given a time frame [start-time, end-time] and an Operator, what is the list of vehicle IDs?
 
-- get : [localhost:4000/task2/:starttime/:endtime/:operator](localhost:4000/task2/:starttime/:endtime/:operator)
+- get : [localhost:6039/vehicles/:starttime/:endtime/:operator](http://localhost:6039/vehicles/:starttime/:endtime/:operator)
   Requires keys:
-  - starttime (ISO 8601)
-  - endtime (ISO 8601)
-  - operator
+  * startTime in ISO-8601 format.
+  * endTime in ISO-8601 format.
+  * operator ID.
 
 3. Given a time frame [start-time, end-time] and a fleet, which vehicles are at a stop?
 
-- get : [localhost:4000/task3/:starttime/:endtime/:operator](localhost:4000/task3/:starttime/:endtime/:operator)
+- get : [localhost:6039/vehiclesAtStop/:starttime/:endtime/:operator](http://localhost:6039/vehiclesAtStop/:starttime/:endtime/:operator)
   Requires keys:
-  - starttime (ISO 8601)
-  - endtime (ISO 8601)
-  - operator
+  * startTime in ISO-8601 format.
+  * endTime in ISO-8601 format.
+  * operator ID.
 
 4. Given a time frame [start-time, end-time] and a vehicle, return the trace of that vehicle (GPS entries, ordered by timestamp).
 
-- get : [localhost:4000/task4/:starttime/:endtime/:vehicleID](localhost:4000/task4/:starttime/:endtime/:vehicleID)
+- get : [localhost:6039/vehicleTrace/:starttime/:endtime/:vehicleID](http://localhost:6039/vehicleTrace/:starttime/:endtime/:vehicleID)
   Requires keys:
-  - starttime (ISO 8601)
-  - endtime (ISO 8601)
-  - vehicleID
+  * startTime in ISO-8601 format.
+  * endTime in ISO-8601 format.
+  * vehicle ID.
 
-All Routes require the parameters in the Endpoint to be modified accordingly. No body required in the request.
+All Routes require the parameters in the Endpoint to be modified accordingly. It is not required a body in the request.
 
-Note: Do not forget to add data to the DEV environment as explained in step 2.
+Note: Do not forget to add data to the MongoDB as explained in step 2.
 
 #### 4. Run the tests
 
-On the folder's directory run:
+On the folder's directory, navigate to the following path:
 
 ```
-npm test
+/src/test/java/com/tblx/api
 ```
 
-Note: Do not forget to add data to the TEST environment as explained in step 2.
+Here you can find the Controller and Service Tests.
+
+Note: Do not forget to add data to the MongoDB as explained in step 2.
 
 # Examples
 
-Take a look at the examples below, and copy the content of swagger/tblx-codechallenge.yml file into https://editor.swagger.io/, for swagger documentation. 
+Take a look at the examples below, and copy the content of swagger/tblx-codechallenge-java.yml file into https://editor.swagger.io/, for swagger documentation. 
 
-#### 1. localhost:4000/task1/:starttime/:endtime
+#### 1. localhost:6039/operators/:starttime/:endtime
 
 - starttime = 2012-11-30T00:00:01
 - endtime = 2012-11-30T00:10:00
-  > expected result = {
-              "result": [
-                  "PO",
-                  "CD",
-                  "HN",
-                  "D2",
-                  "RD",
-                  "CF",
-                  "SL",
-                  "D1"
-              ],
-              "statusCode": 200
-          }
+  > expected result = [ "CD", "RD", "CF", "HN", "SL", "D1", "D2", "PO" ]
 
 #### 2. localhost:4000/task2/:starttime/:endtime/:operator
 
 - starttime = 2012-11-30T00:00:01
 - endtime = 2012-11-30T00:10:00
-- operator = CD
-  > expected result = {
-            "result": [
-                38054,
-                33297,
-                33518,
-                33298,
-                33407,
-                43026,
-                43028,
-                33358,
-                33608,
-                33288,
-                33296,
-                33359,
-                33195,
-                38061,
-                33294,
-                43024,
-                38053
-            ],
-            "statusCode": 200
-        };
+- operator = HN
+  > expected result = [ 33223, 40012, 40014, 33167, 33552, 40017, 40021, 40025, 43034, 40027, 33500, 40029, 33501, 40032, 33184, 43042, 43043, 33510, 43046, 33513, 33452, 33453, 33455, 38070, 38071, 38074 ]
 
 #### 3. localhost:4000/task3/:starttime/:endtime/:operator
 
 - starttime = 2012-11-30T00:00:01
 - endtime = 2012-11-30T00:10:00
 - operator = HN
-  > expected result = {
-            "result": [
-                33359,
-                43024,
-                33407,
-                43028,
-                33296,
-                33288,
-                33298,
-                33294,
-                38054,
-                38061
-            ],
-            "statusCode": 200
-        }
+  > expected result = [ 40032, 33223, 33513, 33453, 40014, 40021, 38070, 40025, 43034, 40027, 33500, 40029, 33501 ]
 
 #### 4. localhost:4000/task4/:starttime/:endtime/:vehicleID
 
 - starttime = 2012-11-30T00:00:01
 - endtime = 2012-11-30T00:10:00
 - vehicleID = 33298
-  > expected result = {
-            "result": [
+  > expected result = [
                 {
-                    "timestamp": 1354233743000000,
-                    "lon": -6.378427,
-                    "lat": 53.319969
+                    "timestamp": "2012-11-30",
+                    "lon": "-6.378427,
+                    "lat": "53.319969
                 },
                 {
-                    "timestamp": 1354233822000000,
-                    "lon": -6.378461,
-                    "lat": 53.323204
+                    "timestamp": "2012-11-30",
+                    "lon": "-6.378461",
+                    "lat": "53.323204"
                 },
-                {
-                    "timestamp": 1354233883000000,
-                    "lon": -6.382735,
-                    "lat": 53.326103
-                },
-                {
-                    "timestamp": 1354234102000000,
-                    "lon": -6.394721,
-                    "lat": 53.319584
-                },
-                {
-                    "timestamp": 1354234140000000,
-                    "lon": -6.395564,
-                    "lat": 53.317257
-                }
-            ],
-            "statusCode": 200
-        }
+                ...
+            ]
 
 # The Challenge formulation:
 
@@ -289,61 +212,16 @@ Name: Dublin Bus GPS sample data from Dublin City Council
 
 Download one extract, and from that extract, use 1 example CSV as input
 
-# NodeJS code tech stack:
-
-## Dev:
-
-- [Node](https://nodejs.org/en/)
-- [Express](https://expressjs.com/)
-- [Mongoose](https://mongoosejs.com/)
-- [nodemon](https://www.npmjs.com/package/nodemon)
-- [Babel](https://babeljs.io/)
-- [Winston](https://www.npmjs.com/package/winston)
-- [Body-parser](https://www.npmjs.com/package/body-parser)
-
-## Testing:
-
-- [Chai](https://www.chaijs.com/)
-- [nyc](https://www.npmjs.com/package/nyc)
-- [mocha](https://mochajs.org/)
-
-## Code Quality:
-
-- [eslint](https://eslint.org/)
-
-## Development process & Standards:
-
-- [TDD](https://en.wikipedia.org/wiki/Test-driven_development)
-- [DDD](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/ddd-oriented-microservice)
-- [REST](https://standards.rest/)
-
 # TODOs
 
-- Improve validations.
 - Improve tests:
-  - More unhappy flows on tests.
-- Improve error handling.
+  - Add more unhappy flows / exceptions on tests.
+  - Test for VehicleTraceService.getVehicleTrace(...) still not working.
+  - Controller tests should test the endpoint and not the method name itself - check commented lines on OperatorsControllerTest. To be implemented correctly.
 - Improve Swagger documentation.
-- Substitute starttime and endtime parameters by query string.
-- Add Facade layer.
-- GitHub CI jobs still not working. 
-
-- unit test - good flow - falta um no serviço!!
-
-- unit test no controller bem - NÃO CONSEGUI
-- Separate requests/Controllers by type. - refactor 
-
-- Limpar todos
-- limpar // comentários
-- ver todas os ficheiros
-- indentar tudo como deve ser - importar alguma tool ou plugin - google format nao esta a funcionar
-- unit test - fazer bad flow? - fazer pelo menos um teste de erro a gerar uma exception!
-    -unit test ao met do serviço
-- documentation
-- readme
-
-- generalizer merdas nos unit tests com before?
-
--sacar o proj e tentar instalar
+- Add tool to standardize the code formatting for all project.
+- Substitute starttime and endtime parameters by query strings.
+- Add MongoDB as a docker image, to avoid users having to install MongoDB on their loval environments.
+- Improve date conversions.
 
 # Made in Lisbon with ♡
