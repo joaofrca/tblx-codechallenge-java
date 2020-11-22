@@ -29,7 +29,7 @@ public class BusgpsControllerTest {
 
 	@InjectMocks
 	BusgpsController busgpsController;
-
+//refactor var names
 	@Test
 	public void getRunningOperatorsTest() throws Exception {
 		Set<String> operatorsArray = Stream.of("CD","RD","CF","HN","SL","D1","D2","PO").collect(Collectors.toSet());
