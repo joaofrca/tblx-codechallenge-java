@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-//adicionar unhappy flows?
-
 @RunWith(MockitoJUnitRunner.class)
 @Tag("VehicleTraceControllerTest")
 public class VehicleTraceControllerTest {
