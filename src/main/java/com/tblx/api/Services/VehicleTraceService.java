@@ -21,6 +21,15 @@ public class VehicleTraceService {
 	@Autowired
 	public UtilsService utilsService;
 
+	/**
+	 * Gets a list of Vehicle Traces for a given time frame and vehicle.
+	 * @param startTime in ISO-8601 format.
+	 * @param endTime in ISO-8601 format.
+	 * @param vehicleID vehicle ID.
+	 * @return list of Vehicle Traces.
+	 * @throws BusgpsNotFoundException
+	 * @throws BusgpsDateConversionException
+	 */
 	public List<VehicleTrace> getVehicleTrace(String startTime, String endTime, int vehicleID) throws BusgpsNotFoundException,
 			BusgpsDateConversionException {
 

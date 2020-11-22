@@ -20,6 +20,15 @@ public class VehiclesService {
 	@Autowired
 	public UtilsService utilsService;
 
+	/**
+	 * Gets a list of Vehicles for a given time frame and operator.
+	 * @param startTime in ISO-8601 format.
+	 * @param endTime in ISO-8601 format.
+	 * @param operator operator ID.
+	 * @return list of Vehicles.
+	 * @throws BusgpsNotFoundException
+	 * @throws BusgpsDateConversionException
+	 */
 	public Set<Integer> getVehiclesIDList(String startTime, String endTime, String operator) throws BusgpsNotFoundException,
 			BusgpsDateConversionException {
 
@@ -42,6 +51,15 @@ public class VehiclesService {
 				.collect(Collectors.toSet());
 	}
 
+	/**
+	 * Gets a list of Vehicles at stop for a given time frame and operator.
+	 * @param startTime in ISO-8601 format.
+	 * @param endTime in ISO-8601 format.
+	 * @param operator operator ID.
+	 * @return list of Vehicles at stop.
+	 * @throws BusgpsNotFoundException
+	 * @throws BusgpsDateConversionException
+	 */
 	public Set<Integer> getVehiclesAtStop(String startTime, String endTime, String operator) throws BusgpsNotFoundException,
 			BusgpsDateConversionException {
 

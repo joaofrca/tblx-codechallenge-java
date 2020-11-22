@@ -3,8 +3,12 @@ package com.tblx.api.Error;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * Handles exceptions. If exception is instance of BusgpsException, creates an appropriate ResponseEntity.
+ * Otherwise creates a ResponseEntity containing INTERNAL_SERVER_ERROR.
+ */
 public class BusgpsExceptionHandler {
-    
+
     public static ResponseEntity handleException(Exception exception){
         ResponseEntity response;
         if(isCustomException((exception))) response = createCustomErrorResponse((BusgpsException) exception);

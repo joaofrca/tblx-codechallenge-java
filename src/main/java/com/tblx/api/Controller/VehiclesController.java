@@ -24,6 +24,13 @@ public class VehiclesController {
 	@Autowired
 	public VehiclesService vehiclesService;
 
+	/**
+	 * Gets a list of Vehicles at stop for a given time frame and operator.
+	 * @param startTime in ISO-8601 format.
+	 * @param endTime in ISO-8601 format.
+	 * @param operator operator ID.
+	 * @return ResponseEntity
+	 */
 	@GetMapping(value= "/vehicles/{startTime}/{endTime}/{operator}")
 	public ResponseEntity getVehiclesIDList(@PathVariable(value="startTime") @NonNull String startTime,
 										  @PathVariable(value="endTime") @NonNull String endTime,
@@ -39,6 +46,13 @@ public class VehiclesController {
 		}
 	}
 
+	/**
+	 * Gets a list of Vehicles at stop for a given time frame and operator.
+	 * @param startTime in ISO-8601 format.
+	 * @param endTime in ISO-8601 format.
+	 * @param operator operator ID.
+	 * @return ResponseEntity
+	 */
 	@GetMapping(value= "/vehiclesAtStop/{startTime}/{endTime}/{operator}")
 	public ResponseEntity getVehiclesAtStop(@PathVariable(value="startTime") @NonNull String startTime,
 										  @PathVariable(value="endTime") @NonNull String endTime,

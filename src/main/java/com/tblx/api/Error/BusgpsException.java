@@ -2,6 +2,9 @@ package com.tblx.api.Error;
 
 import org.springframework.http.HttpStatus;
 
+/**
+ * Custom BusgpsException.
+ */
 public class BusgpsException extends Exception{
 
 	private final HttpStatus statusCode;

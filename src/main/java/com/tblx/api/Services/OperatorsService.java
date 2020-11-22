@@ -20,6 +20,14 @@ public class OperatorsService {
 	@Autowired
 	public UtilsService utilsService;
 
+	/**
+	 * Gets a list of Running Operators for a given time frame.
+	 * @param startTime in ISO-8601 format.
+	 * @param endTime in ISO-8601 format.
+	 * @return list of Running Operators
+	 * @throws BusgpsNotFoundException
+	 * @throws BusgpsDateConversionException
+	 */
 	public Set<String> getRunningOperators(String startTime, String endTime) throws BusgpsNotFoundException,
 			BusgpsDateConversionException {
 

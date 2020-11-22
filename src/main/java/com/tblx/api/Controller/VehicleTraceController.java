@@ -25,6 +25,13 @@ public class VehicleTraceController {
 	@Autowired
 	public VehicleTraceService vehicleTraceService;
 
+	/**
+	 * Gets a list of Vehicle Traces for a given time frame and vehicle.
+	 * @param startTime in ISO-8601 format.
+	 * @param endTime in ISO-8601 format.
+	 * @param vehicleID vehicle ID.
+	 * @return ResponseEntity
+	 */
 	@GetMapping(value= "/vehicleTrace/{startTime}/{endTime}/{vehicleID}")
 	public ResponseEntity getVehicleTrace(@PathVariable(value="startTime") @NonNull String startTime,
 										   @PathVariable(value="endTime") @NonNull String endTime,

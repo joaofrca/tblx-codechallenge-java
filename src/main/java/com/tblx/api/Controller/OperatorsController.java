@@ -24,6 +24,12 @@ public class OperatorsController {
 	@Autowired
 	public OperatorsService operatorsService;
 
+	/**
+	 * Gets a list of Running Operators for a given time frame.
+	 * @param startTime in ISO-8601 format.
+	 * @param endTime in ISO-8601 format.
+	 * @return ResponseEntity
+	 */
 	@GetMapping(value= "/operators/{startTime}/{endTime}")
 	public ResponseEntity getRunningOperators(@PathVariable(value="startTime") @NonNull String startTime,
 											@PathVariable(value="endTime") @NonNull String endTime){
