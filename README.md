@@ -31,7 +31,7 @@ git clone https://github.com/joaofrca/tblx-codechallenge.git
 On the folder's directory run:
 
 ```
-npm install OR npm i
+./mvnw spring-boot:run
 ```
 
 #### 2. Data Load
@@ -344,5 +344,6 @@ Download one extract, and from that extract, use 1 example CSV as input
 
 - generalizer merdas nos unit tests com before?
 
+-sacar o proj e tentar instalar
 
 # Made in Lisbon with ♡

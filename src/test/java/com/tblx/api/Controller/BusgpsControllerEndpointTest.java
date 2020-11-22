@@ -26,13 +26,14 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 @Tag("Controller")
 public class BusgpsControllerEndpointTest {
 
-	private MockMvc mockMvc;
 
 	@InjectMocks
 	BusgpsController busgpsController;
 
 	@Mock
 	BusgpsService busgpsService;
+
+	private MockMvc mockMvc;
 
 	@Before
 	public void init()
